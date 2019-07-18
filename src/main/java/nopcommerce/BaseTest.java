@@ -1,5 +1,6 @@
 package nopcommerce;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -16,8 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
+    protected Configuration configuration;
+
     @BeforeMethod
     public void setup() throws IOException {
+        configuration = new Configuration();
         driver = initializeDriver();
         openApp();
     }
@@ -31,17 +35,11 @@ public class BaseTest {
 
     public WebDriver initializeDriver() throws IOException {
 
-        String root = new File("").getAbsolutePath();
-
-        Properties prop = new Properties();
-        FileInputStream fis = new FileInputStream(root + "//src//main//java//nopcommerce//properties//data.properties");
-
-        prop.load(fis);
-        String browserName = prop.getProperty("browser");
+        String browserName = configuration.getBrowser();
 //        System.out.println(prop.getProperty("browser"));
 
         if(browserName.equals("chrome")){
-            System.setProperty("webdriver.chrome.driver", root + "//chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", new File("").getAbsolutePath() + "//chromedriver.exe");
             driver = new ChromeDriver();
         }
 
@@ -52,7 +50,12 @@ public class BaseTest {
     }
 
     public void openApp(){
-        driver.get("http://demo.nopcommerce.com/");
+        driver.get(configuration.getBaseUrl());
+    }
+
+    public boolean isElementPresent(By locator) {
+        int count = driver.findElements(locator).size();
+        return count > 0;
     }
 
 

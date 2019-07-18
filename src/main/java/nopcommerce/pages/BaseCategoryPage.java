@@ -13,16 +13,10 @@ import java.util.stream.Collectors;
 
 public class BaseCategoryPage extends BasePage {
 
-    private By breadcrumbItem = By.className("current-item");
     private By categoryTitle = By.tagName("h1");
 
     public BaseCategoryPage(WebDriver driver) {
         super(driver);
-    }
-
-    public String getBreadcrumbItem(){
-        String actualBreadCrumbItem = driver.findElement(breadcrumbItem).getText();
-        return actualBreadCrumbItem;
     }
 
     public String getCategoryTitle(){

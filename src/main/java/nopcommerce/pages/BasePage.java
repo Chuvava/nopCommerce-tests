@@ -1,6 +1,7 @@
 package nopcommerce.pages;
 
 import nopcommerce.modules.RightTop;
+import nopcommerce.modules.SearchBox;
 import nopcommerce.modules.TopCategoryMenu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,15 +17,22 @@ public abstract class BasePage {
         this.driver = driver;
         this.rightTop = new RightTop();
         this.topCategoryMenu = new TopCategoryMenu();
+        this.searchBox = new SearchBox(driver);
     }
 
     public RightTop rightTop;
     public WebDriver driver;
     public TopCategoryMenu topCategoryMenu;
+    public SearchBox searchBox;
+    private By breadcrumbItem = By.className("current-item");
 
     public void clickOn(By locator){
-
         driver.findElement(locator).click();
+    }
+
+    public String getBreadcrumbItem(){
+        String actualBreadCrumbItem = driver.findElement(breadcrumbItem).getText();
+        return actualBreadCrumbItem;
     }
 
     public void selectCurrency(String currency){

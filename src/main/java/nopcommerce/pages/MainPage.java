@@ -9,7 +9,8 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
-    public void clickOnLogin(){
+    public LoginPage clickOnLogin(){
         driver.findElement(rightTop.loginBtn).click();
+        return new LoginPage(driver);
     }
 }
